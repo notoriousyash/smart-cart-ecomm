@@ -29,4 +29,6 @@ public class ProductRequestDTO {
     @NotNull(message = "Quantity is required")
     @PositiveOrZero(message = "Quantity cannot be negative")
     private Integer quantity;
+
+    private String imageUrl;
 }

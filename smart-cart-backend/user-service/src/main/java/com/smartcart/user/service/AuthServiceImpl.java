@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole() != null ? request.getRole() : "USER")
+                .role("CUSTOMER")
                 .build();
 
         userRepository.save(user);
@@ -51,6 +51,7 @@ public class AuthServiceImpl implements AuthService {
                 .token(token)
                 .message("Login successful")
                 .userId(user.getId())
+                .role(user.getRole())
                 .build();
     }
 }

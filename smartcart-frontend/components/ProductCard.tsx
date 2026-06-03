@@ -24,10 +24,18 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
       <div className="aspect-[4/3] w-full bg-gray-100 dark:bg-gray-800 overflow-hidden relative">
-        <div className="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
-          {/* Placeholder for Product Image */}
-          <span className="text-sm font-medium uppercase tracking-widest">{product.name.substring(0, 2)}</span>
-        </div>
+        {product.imageUrl ? (
+          <img 
+            src={product.imageUrl} 
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
+            {/* Placeholder for Product Image */}
+            <span className="text-sm font-medium uppercase tracking-widest">{product.name.substring(0, 2)}</span>
+          </div>
+        )}
         {isOutOfStock && (
           <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md z-10">
             Out of Stock

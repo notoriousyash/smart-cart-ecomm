@@ -27,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
                 .description(requestDTO.getDescription())
                 .price(requestDTO.getPrice())
                 .quantity(requestDTO.getQuantity())
+                .imageUrl(requestDTO.getImageUrl())
                 .build();
 
         Product savedProduct = productRepository.save(product);
@@ -46,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(requestDTO.getDescription());
         product.setPrice(requestDTO.getPrice());
         product.setQuantity(requestDTO.getQuantity());
+        product.setImageUrl(requestDTO.getImageUrl());
 
         Product updatedProduct = productRepository.save(product);
         log.info("Product updated successfully with ID: {}", updatedProduct.getId());
@@ -108,6 +110,7 @@ public class ProductServiceImpl implements ProductService {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
+                .imageUrl(product.getImageUrl())
                 .build();
     }
 }

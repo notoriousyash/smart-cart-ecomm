@@ -15,6 +15,7 @@ export interface Product {
   description: string;
   price: number;
   quantity: number;
+  imageUrl?: string;
 }
 
 export interface CartItem extends Product {

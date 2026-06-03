@@ -54,6 +54,11 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                                     .header("loggedInRole", role)
                                     .build())
                             .build();
+                            
+                    String path = exchange.getRequest().getURI().getPath();
+                    if (path.startsWith("/api/products") && !"ADMIN".equals(role)) {
+                        return onError(exchange, "Admin access required");
+                    }
 
                     return chain.filter(mutatedExchange);
 

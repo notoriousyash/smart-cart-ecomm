@@ -12,12 +12,16 @@ public class RouteValidator {
     public static final List<String> openApiEndpoints = List.of(
             "/api/users/register",
             "/api/users/login",
-            "/eureka",
-            "/api/products"
+            "/eureka"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
-            request -> openApiEndpoints
-                    .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
+            request -> {
+                String path = request.getURI().getPath();
+                String method = request.getMethod().name();
+                if (method.equals("GET") && path.startsWith("/api/products")) {
+                    return false;
+                }
+                return openApiEndpoints.stream().noneMatch(uri -> path.contains(uri));
+            };
 }

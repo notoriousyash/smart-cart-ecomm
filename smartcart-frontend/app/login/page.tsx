@@ -28,7 +28,7 @@ export default function LoginPage() {
       });
 
       if (response.token) {
-        login(response.token, username, response.userId);
+        login(response.token, username, response.userId, response.role);
         toast.success("Logged in successfully");
         router.push("/");
       } else {

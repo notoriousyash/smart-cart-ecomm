@@ -18,6 +18,12 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      Cookies.remove('token');
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login';
+      }
+    }
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.message || `API Error: ${response.status}`);
   }

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, User, LogOut } from 'lucide-react';
+import { ShoppingCart, User, LogOut, PlusCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { CartDrawer } from './CartDrawer';
@@ -40,6 +40,17 @@ export function Navbar() {
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden md:block">
                     Hi, {user?.username}
                   </span>
+                  
+                  {user?.role === 'ADMIN' && (
+                    <Link 
+                      href="/add-product" 
+                      className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 rounded-lg transition-colors"
+                    >
+                      <PlusCircle className="w-4 h-4" />
+                      <span className="hidden sm:block">Add Product</span>
+                    </Link>
+                  )}
+
                   <button 
                     onClick={logout}
                     className="p-2 text-gray-600 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400 transition-colors"

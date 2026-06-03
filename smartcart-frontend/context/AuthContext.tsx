@@ -12,7 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (token: string, username: string, userId?: number) => void;
+  login: (token: string, username: string, userId?: number, role?: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -28,25 +28,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const savedToken = Cookies.get('token');
     const savedUsername = Cookies.get('username');
     const savedUserId = Cookies.get('userId');
+    const savedRole = Cookies.get('role');
     
     if (savedToken && savedUsername) {
       setToken(savedToken);
       setUser({ 
         username: savedUsername, 
-        id: savedUserId ? parseInt(savedUserId) : undefined 
+        id: savedUserId ? parseInt(savedUserId) : undefined,
+        role: savedRole
       });
     }
   }, []);
 
-  const login = (newToken: string, username: string, userId?: number) => {
+  const login = (newToken: string, username: string, userId?: number, role?: string) => {
     setToken(newToken);
-    setUser({ username, id: userId });
+    setUser({ username, id: userId, role });
     
     // Store in cookies
     Cookies.set('token', newToken, { expires: 7 }); // expires in 7 days
     Cookies.set('username', username, { expires: 7 });
     if (userId) {
       Cookies.set('userId', userId.toString(), { expires: 7 });
+    }
+    if (role) {
+      Cookies.set('role', role, { expires: 7 });
     }
   };
 
@@ -56,6 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     Cookies.remove('token');
     Cookies.remove('username');
     Cookies.remove('userId');
+    Cookies.remove('role');
   };
 
   return (
